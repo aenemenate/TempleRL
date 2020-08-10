@@ -25,7 +25,7 @@ Bool MainMenuLoop()
 {
   Fs->draw_it=&MainMenuDrawIt;
   MainMenuInit;
-  Bool running = TRUE;
+  Bool running = TRUE;
   Bool endprog = FALSE;
   I64 key=0, sc=0, msg_code;
   try {
@@ -38,11 +38,26 @@ Bool MainMenuLoop()
 	    sel_opt=Clamp(sel_opt-1,0,2);
 	  else if (key == '2' || sc.u8[0] == SC_CURSOR_DOWN)
 	    sel_opt=Clamp(sel_opt+1,0,2);
-          else if (key == CH_SPACE || sc.u8[0] == SC_ENTER)
+          else if (key == CH_SPACE || sc.u8[0] == SC_ENTER)
 	  {
 	    if (sel_opt==0){
+	      world.seed = 20;
+	      GenMap;
 	      running = PlayLoop;
 	      Fs->draw_it=&MainMenuDrawIt;
+	    }
+	    else if (sel_opt==1)
+	    {
+	      if (FileFind(DB_FILENAME))
+	      {
+		InitWorld(&world);
+		MapFIOInit;
+		ReadMap;
+		EntityFIOInit;
+		ReadEntities;
+		running = PlayLoop;
+		Fs->draw_it=&MainMenuDrawIt;
+	      }
 	    }
 	    else if (sel_opt==2)
 	      running = FALSE;

@@ -21,11 +21,11 @@ I64 noise2(I64 x, I64 y)
     yindex += 256;
   I64 xindex = (hash[yindex] + x) % 256;
   if (xindex < 0)
-    xindex += 256;
+    xindex += 256;
   return hash[xindex];
 }
 
-F64 lin_inter(F64 x, F64 y, F64 s)
+F64 lin_inter(F64 x, F64 y, F64 s)
 {
   return x + s * (y-x);
 }
